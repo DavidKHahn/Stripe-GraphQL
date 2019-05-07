@@ -1,6 +1,9 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
+import { ApolloServer } from 'apollo-server-express';
+
 import {User} from "./entity/User";
+
 
 createConnection().then(async connection => {
 
@@ -19,3 +22,15 @@ createConnection().then(async connection => {
     console.log("Here you can setup and run express/koa/any other framework.");
 
 }).catch(error => console.log(error));
+
+const server = new ApolloServer({
+  // These will be defined for both new or existing servers
+  typeDefs,
+  resolvers,
+});
+
+server.applyMiddleware({ app }); // app is from an existing express app
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+)
