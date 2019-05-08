@@ -17,7 +17,7 @@ export const resolvers: IResolvers= {
 
             return true;
         },
-        login: async (_, { email, password }) => {
+        login: async (_, { email, password }, { req }) => {
             const user = await User.findOne({ where: { email } });
             if (!user) {
                 return null;
@@ -28,6 +28,8 @@ export const resolvers: IResolvers= {
             return null;
         }
 
+        req.session.userId = user.id;
+        
         return user;
         }
     }

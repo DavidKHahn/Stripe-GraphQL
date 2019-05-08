@@ -1,28 +1,37 @@
 // import "reflect-metadata";
-import {createConnection} from "typeorm";
-import { ApolloServer } from 'apollo-server-express';
+import { createConnection } from "typeorm";
+import { ApolloServer } from "apollo-server-express";
 import * as express from "express";
+import * as session from "express-session";
 
-import { typeDefs } from './TypeDefs';
-import { resolvers } from './resolvers';
+import { typeDefs } from "./TypeDefs";
+import { resolvers } from "./resolvers";
 
 const startServer = async () => {
+  const server = new ApolloServer({
+    // These will be defined for both new or existing servers
+    typeDefs,
+    resolvers,
+    context: ({ req }: any) => ({ req })
+  });
 
-    const server = new ApolloServer({
-        // These will be defined for both new or existing servers
-        typeDefs,
-        resolvers,
-      });
+  await createConnection();
 
-    await createConnection();
-      
-      const app = express();
-      
-      server.applyMiddleware({ app }); // app is from an existing express app
-      
-      app.listen({ port: 4000 }, () =>
-        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-      )
-}
+  const app = express();
+
+  app.use(
+    session({
+      secret: "asdf1234",
+      resave: false,
+      saveUninitialized: false
+    })
+  );
+
+  server.applyMiddleware({ app }); // app is from an existing express app
+
+  app.listen({ port: 4000 }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  );
+};
 
 startServer();
