@@ -1,11 +1,10 @@
 // import "reflect-metadata";
-import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import * as express from "express";
 import * as session from "express-session";
-
-import { typeDefs } from "./TypeDefs";
+import { createConnection } from "typeorm";
 import { resolvers } from "./resolvers";
+import { typeDefs } from "./TypeDefs";
 
 const startServer = async () => {
   const server = new ApolloServer({
@@ -27,7 +26,13 @@ const startServer = async () => {
     })
   );
 
-  server.applyMiddleware({ app }); // app is from an existing express app
+  server.applyMiddleware({
+    app,
+    cors: {
+      credentials: true,
+      origin: "http://localhost:3000/"
+    }
+  }); // app is from an existing express app
 
   app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
