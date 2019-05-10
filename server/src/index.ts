@@ -21,7 +21,7 @@ const startServer = async () => {
 
   app.use(
     session({
-      secret: "asdf1234",
+      secret: "asdjlfkaasdfkjlads",
       resave: false,
       saveUninitialized: false
     })
@@ -31,7 +31,7 @@ const startServer = async () => {
     app,
     cors: {
       credentials: true,
-      origin: "http://localhost:3000/"
+      origin: "http://localhost:3000"
     }
   }); // app is from an existing express app
 
