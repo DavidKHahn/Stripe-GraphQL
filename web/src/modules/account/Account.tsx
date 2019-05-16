@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 import * as React from "react";
 import { PureComponent } from "react";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import { MeQuery } from "../../schemaTypes";
 import SubscribeUser from "./SubscribeUser";
 
@@ -30,7 +30,7 @@ export default class Account extends PureComponent {
             return <div>Data is Undefined</div>;
           }
           if (!data.me) {
-            return <Link to="/login">Please Login</Link>;
+            return <Redirect to="/login" />;
           }
 
           if (data.me.type === "free-trial") {
@@ -38,7 +38,7 @@ export default class Account extends PureComponent {
           }
 
           //   if (data.me.type === 'paid')
-          return <div>Thank you and come again!</div>;
+          return <Redirect to="/paid-users" />;
         }}
       </Query>
     );
