@@ -1,5 +1,8 @@
 import * as React from "react";
+import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
+import { meQuery } from "../graphql/queries/me";
+import { MeQuery } from "../schemaTypes";
 
 export default class Header extends React.PureComponent {
   render() {
@@ -10,19 +13,41 @@ export default class Header extends React.PureComponent {
           width: "100%",
           backgroundColor: "#fafafa",
           display: "flex",
-          justifyContent: 'space-around',
+          justifyContent: "space-around",
           padding: 10
         }}
       >
-        <Link to='/'>
-        <h2>Striple Example</h2>
+        <Link to="/">
+          <h2>Striple Example</h2>
         </Link>
-        <div>
-          <Link to="/login">Login</Link>
-        </div>
-        <div>
-          <Link to="/register">Register</Link>
-        </div>
+        <Query<MeQuery> fetchPolicy="network-only" query={meQuery}>
+          {({ data, loading }) => {
+            if (loading || !data) {
+              return null;
+            }
+
+            if (!data.me) {
+              return (
+                <div>
+                  <div>
+                    <Link to="/login">Login</Link>
+                  </div>
+                  <div>
+                    <Link to="/register">Register</Link>
+                  </div>
+                </div>
+              );
+            }
+
+            // user is logged in
+
+            return (
+                <div>
+                    <Link to="/account">Account</Link>
+                </div>
+            );
+          }}
+        </Query>
       </div>
     );
   }
