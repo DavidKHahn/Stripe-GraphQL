@@ -2,6 +2,7 @@ import { gql } from "apollo-boost";
 import * as React from "react";
 import { PureComponent } from "react";
 import { Query } from "react-apollo";
+import { Link } from 'react-router-dom';
 import { MeQuery } from "../../schemaTypes";
 
 const meQuery = gql`
@@ -9,14 +10,16 @@ const meQuery = gql`
     me {
       id
       email
+      type
     }
   }
 `;
 
-export default class MeView extends PureComponent {
+export default class Account extends PureComponent {
   render() {
     return (
-      <Query<MeQuery> query={meQuery}>
+    // fetchPolicy ignore caching and goes directly to server each time
+      <Query<MeQuery> fetchPolicy="network-only" query={meQuery}>
         {({ data, loading }) => {
           if (loading) {
             return null;
@@ -26,10 +29,10 @@ export default class MeView extends PureComponent {
             return <div>Data is Undefined</div>;
           }
           if (!data.me) {
-            return <div>Received No Uuser</div>;
+            return <Link to="/login">Please Login</Link>;
           }
 
-          return <div>{data.me.email}</div>;
+          return <div>{data.me.type}</div>;
         }}
       </Query>
     );

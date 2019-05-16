@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import SubscribeUser from './modules/account/SubscribeUser';
+import Account from './modules/account/Account';
 import LoginView from './modules/user/LoginView';
-import MeView from './modules/user/MeView';
 import RegisterView from './modules/user/RegisterView';
 
 export default class Routes extends PureComponent {
@@ -12,9 +11,8 @@ export default class Routes extends PureComponent {
     <BrowserRouter>
         <Switch>
             <Route path="/login" component={LoginView} />
-            <Route path="/register" component={MeView} />
-            <Route path="/me" component={RegisterView} />
-            <Route path="/subscription" component={SubscribeUser} />
+            <Route path="/register" component={RegisterView} />
+            <Route path="/account" component={Account} />
         </Switch>
     </BrowserRouter>
     )

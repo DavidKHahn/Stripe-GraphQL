@@ -66,7 +66,7 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
                   variables: { email, password }
                 });
                 console.log(response);
-                this.props.history.push("/me");
+                this.props.history.push("/account");
               }}
                 >Login</button>
             </div>
