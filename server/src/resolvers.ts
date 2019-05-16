@@ -39,7 +39,7 @@ export const resolvers: IResolvers= {
         return user;
         },
         // source represents credit card
-        createSubscription: async (_, {source}, {req}) => {
+        createSubscription: async (_, {source, ccLast4}, {req}) => {
             // checks if users have user id or session available
             if(!req.session || !req.session.userId) {
                 throw new Error("Not Authenticated")
@@ -58,12 +58,13 @@ export const resolvers: IResolvers= {
             });
 
             user.stripeId = customer.id;
-            user.type = "test";
+            user.type = "paid";
+            user.ccLast4 = ccLast4;
             await user.save();
 
             return user;
         },
-        changeCreditCard: async (_, {source}, {req}) => {
+        changeCreditCard: async (_, {source, ccLast4}, {req}) => {
             // checks if users have user id or session available
             if(!req.session || !req.session.userId) {
                 throw new Error("Not Authenticated")
@@ -75,7 +76,10 @@ export const resolvers: IResolvers= {
                 throw new Error();
             }
 
-            await stripe.customers.update(user.stripeId, { source })
+            await stripe.customers.update(user.stripeId, { source });
+
+            user.ccLast4 = ccLast4;
+            await user.save();
 
             return user;
         }
