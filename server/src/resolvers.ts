@@ -62,6 +62,22 @@ export const resolvers: IResolvers= {
             await user.save();
 
             return user;
+        },
+        changeCreditCard: async (_, {source}, {req}) => {
+            // checks if users have user id or session available
+            if(!req.session || !req.session.userId) {
+                throw new Error("Not Authenticated")
+            }
+
+            const user = await User.findOne(req.session.userId);
+
+            if (!user || !user.stripeId || user.type === 'paid') {
+                throw new Error();
+            }
+
+            await stripe.customers.update(user.stripeId, { source })
+
+            return user;
         }
     }
-}
+};
