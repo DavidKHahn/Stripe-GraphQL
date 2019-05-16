@@ -14,7 +14,7 @@ const changeCreditCardMutation = gql`
   }
 `;
 
-export default class SubscribeUser extends React.PureComponent {
+export class ChangeCreditCard extends React.PureComponent {
   render() {
     return (
       <Mutation<ChangeCreditCardMutation, ChangeCreditCardMutationVariables>

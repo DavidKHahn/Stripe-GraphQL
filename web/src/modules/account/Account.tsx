@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import { Redirect } from 'react-router-dom';
 import { meQuery } from '../../graphql/queries/me';
 import { MeQuery } from "../../schemaTypes";
+import ChangeCreditCard from './ChangeCreditCard';
 import SubscribeUser from "./SubscribeUser";
 
 export default class Account extends PureComponent {
@@ -28,7 +29,7 @@ export default class Account extends PureComponent {
           }
 
           //   if (data.me.type === 'paid')
-          return <Redirect to="/paid-users" />;
+          return <ChangeCreditCard />;
         }}
       </Query>
     );
