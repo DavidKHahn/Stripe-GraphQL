@@ -2,16 +2,16 @@ import { gql } from "apollo-boost";
 import * as React from "react";
 import { Mutation } from "react-apollo";
 import StripeCheckout from "react-stripe-checkout";
+import { userFragment } from '../../graphql/fragments/userFragment';
 import { CreateSubscriptionMutation, CreateSubscriptionMutationVariables } from '../../schemaTypes';
 
 const createSubscriptionMutation = gql`
-  mutation CreateSubscriptionMutation($source: String!) {
-    createSubscription(source: $source) {
-      id
-      email
-      type
+  mutation CreateSubscriptionMutation($source: String!, $ccLast4: String!) {
+    createSubscription(source: $source, ccLast4: $ccLast4) {
+      ...UserInfo
     }
   }
+  ${userFragment}
 `;
 
 export default class SubscribeUser extends React.PureComponent {
@@ -23,7 +23,7 @@ export default class SubscribeUser extends React.PureComponent {
         {(mutate) => (
           <StripeCheckout
             token={async token => {
-              const response = await mutate({variables: {source: token.id}
+              const response = await mutate({variables: {source: token.id, ccLast4: token.card.last4}
               });
               console.log(response);
             }}

@@ -3,17 +3,17 @@ import * as React from "react";
 import { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { RouteComponentProps } from "react-router";
+import { userFragment } from '../../graphql/fragments/userFragment';
 import { meQuery } from "../../graphql/queries/me";
 import { LoginMutation, LoginMutationVariables } from "../../schemaTypes";
 
 const loginMutation = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      id
-      email
-      type
+    ...UserInfo
     }
   }
+  ${userFragment}
 `;
 
 export default class LoginView extends PureComponent<RouteComponentProps<{}>> {

@@ -75,7 +75,7 @@ export const resolvers: IResolvers= {
             if (!user || !user.stripeId || user.type === 'paid') {
                 throw new Error();
             }
-
+            // updates credit card info
             await stripe.customers.update(user.stripeId, { source });
 
             user.ccLast4 = ccLast4;
