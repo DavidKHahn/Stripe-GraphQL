@@ -28,8 +28,11 @@ export class ChangeCreditCard extends React.PureComponent {
               });
               console.log(response);
             }}
+            panelLabel="Change Card"
             stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE!}
-          />
+          >
+          <button>Change Credit Card</button>
+          </StripeCheckout>
         )}
       </Mutation>
     );
