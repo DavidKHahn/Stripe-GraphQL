@@ -106,6 +106,10 @@ export const resolvers: IResolvers = {
         stripeCustomer.default_source as string
       );
 
+      user.type = "free-trial";
+      user.stripeId = null;
+      await user.save();
+
       return user;
     }
   }
