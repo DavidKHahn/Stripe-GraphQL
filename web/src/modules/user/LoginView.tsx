@@ -6,6 +6,7 @@ import { RouteComponentProps } from "react-router";
 import { userFragment } from '../../graphql/fragments/userFragment';
 import { meQuery } from "../../graphql/queries/me";
 import { LoginMutation, LoginMutationVariables } from "../../schemaTypes";
+import { RedButton } from '../../ui/RedButton';
 
 const loginMutation = gql`
   mutation LoginMutation($email: String!, $password: String!) {
@@ -73,7 +74,7 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
               />
             </div>
             <div>
-              <button
+              <RedButton
                 onClick={async () => {
                   // optional reset cache
                   await client.resetStore();
@@ -86,7 +87,7 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
                 }}
               >
                 Login
-              </button>
+              </RedButton>
             </div>
           </div>
         )}
