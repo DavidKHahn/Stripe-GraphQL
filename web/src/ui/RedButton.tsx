@@ -16,4 +16,8 @@ export const RedButton = styled("button")`
   justify-content: center;
   margin-top: 6px;
   margin-bottom: 12px;
+  cursor: pointer;
+  &:hover {
+      background-color: #f3edeb;
+  }
 `;

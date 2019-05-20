@@ -3,15 +3,16 @@ import * as React from "react";
 import { PureComponent } from "react";
 import { Mutation } from "react-apollo";
 import { RouteComponentProps } from "react-router";
-import { userFragment } from '../../graphql/fragments/userFragment';
+import { userFragment } from "../../graphql/fragments/userFragment";
 import { meQuery } from "../../graphql/queries/me";
 import { LoginMutation, LoginMutationVariables } from "../../schemaTypes";
-import { RedButton } from '../../ui/RedButton';
+import { Input } from "../../ui/Input";
+import { RedButton } from "../../ui/RedButton";
 
 const loginMutation = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-    ...UserInfo
+      ...UserInfo
     }
   }
   ${userFragment}
@@ -56,19 +57,21 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
             }}
           >
             <div>
-              <input
+              <Input
+                label="EMAIL"
                 type="text"
                 name="email"
-                placeholder="email"
+                placeholder="Enter your email address..."
                 value={email}
                 onChange={this.handleChange}
               />
             </div>
             <div>
-              <input
+              <Input
+                label="PASSWORD"
                 type="password"
                 name="password"
-                placeholder="password"
+                placeholder="Enter your password..."
                 value={password}
                 onChange={this.handleChange}
               />
