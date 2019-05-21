@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
   *:focus {
     outline: 0;
   }
+  a {
+    color: #0d0d0d;
+    text-decoration: none;
+  }
   `;
 
 ReactDOM.render(
