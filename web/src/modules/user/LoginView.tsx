@@ -65,8 +65,6 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
                 value={email}
                 onChange={this.handleChange}
               />
-            </div>
-            <div>
               <Input
                 label="PASSWORD"
                 type="password"
@@ -75,8 +73,6 @@ export default class LoginView extends PureComponent<RouteComponentProps<{}>> {
                 value={password}
                 onChange={this.handleChange}
               />
-            </div>
-            <div>
               <RedButton
                 onClick={async () => {
                   // optional reset cache
